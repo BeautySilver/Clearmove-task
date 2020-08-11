@@ -1,0 +1,26 @@
+build:
+  context: .
+  dockerfile: Dockerfile
+  command: npm run start:dev
+  environment:
+    - NODE_ENV=development
+    - PG_HOST=db
+    - PG_PORT=5432
+    - PG_USER=user
+    - PG_PWD=pass
+    - PG_DB=db
+  ports:
+    - 3000:3000
+  volumes:
+    - .:/usr/app
+    - /usr/app/node_modules
+  db:
+    image: postgres:12
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: pass
+      POSTGRES_DB: db
+    volumes:
+      - './postgres-data:/var/lib/postgresql'
